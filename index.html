@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Woman's Day</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <video autoplay loop muted id="bgVideo" class="video-background">
+        <source src="background2.mp4" type="video/mp4">
+    </video>
+
+    <img src="1.jpg" class="photo photo-1" alt="Photo 1">
+    <img src="2.jpg" class="photo photo-2" alt="Photo 2">
+
+    <h1>🎉 Congratulations Nguyễn Ngọc Kim Uyên (Penny) 🎉</h1>
+    <h1>Vietnam Women's Day 20/10</h1>
+    
+    <div class="input-wrapper">
+        <input type="password" id="birthdayInput" placeholder="Your birthday will be the key to claim your gift (DDMMYYYY)" maxlength="8">
+    </div>
+    
+    <p id="errorMsg"></p>
+    
+    <script>
+        const bgVideo = document.getElementById('bgVideo');
+        
+        // Unmute video on first user interaction
+        function enableSound() {
+            bgVideo.muted = false;
+            bgVideo.volume = 0.5; // Set volume to 50%
+            document.removeEventListener('click', enableSound);
+            document.removeEventListener('keypress', enableSound);
+        }
+        
+        document.addEventListener('click', enableSound);
+        document.addEventListener('keypress', enableSound);
+        
+        function checkBirthday() {
+            const input = document.getElementById('birthdayInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const password = input.value.trim();
+            
+            if (password === '') {
+                errorMsg.textContent = 'Please enter your birthday!';
+                return;
+            }
+            
+            if (password === '09112007') {
+                errorMsg.textContent = '';
+                window.location.href = 'flower.html';
+            } else {
+                errorMsg.textContent = 'Wrong birthday! Please try again.';
+                input.value = '';
+            }
+        }
+        
+        // Allow Enter key
+        document.getElementById('birthdayInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkBirthday();
+            }
+        });
+        
+        // Auto submit when 8 digits entered
+        document.getElementById('birthdayInput').addEventListener('input', function(event) {
+            if (this.value.length === 8) {
+                checkBirthday();
+            }
+        });
+    </script>
+
+</body>
+</html>
